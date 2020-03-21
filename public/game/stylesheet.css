@@ -1,0 +1,77 @@
+
+#gamewindow {
+    width: calc(100vw - 2px);
+    height: calc(100vh - 2px);
+    border: 1px solid black;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    margin: 0rem;
+    padding: 0;
+    overflow: hidden;
+}
+
+.menu-items {
+    padding: 0px 1rem ;
+}
+
+.menu-item {
+    background-color: #bbbbbb;
+     font-size: 20px;
+    padding: .5rem 0rem;
+    margin-bottom: .5rem;
+    height: 20%;
+    transition: all .2s ease-in-out;
+}
+.menu-item:hover {
+    transform: scale(1.05);
+}
+.menu-item:active {
+    background-color: #aaaaaa;
+}
+
+#menu-main {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 50%;
+    height: 50%;
+    transform: translate(50%, 50%);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #999999; /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+    text-align: center;
+    border-radius: 10px;
+
+}
+
+#menu-close {
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: red;
+
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-top-left-radius: 10px;
+}
+
+#pause {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #666666;
+    width: 75px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    z-index: 1;
+    border-bottom-right-radius: 10px;
+}

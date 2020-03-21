@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Get to the gate!</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="nav-top">
+        <h1>Get to the gate!</h1>
+    </div>
+    <div class="content">
+        <div class="row userinput">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="fields">
+                        <div class="row">
+                            <div class="col-6 first">
+                                <p>Username:</p>
+                            </div>
+                            <div class="col-6 second">
+                                <input type="text" id="username">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 first">
+                                <p>Room Code:</p>
+                            </div>
+                            <div class="col-6 second">
+                                <input type="text" id="roomid">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 first">
+                                <p>Character color:</p>
+                            </div>
+                            <div class="col-6 second">
+                                <input type="color" id="color">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row game-join">
+                    <div class="btn btn-primary" id="game-join">Join Game!</div>
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="othergames">
+            <div class="row">
+                <div class="col-12" style="text-align: center; font-size: 30px; font-weight: 500">OR</div>
+            </div>
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8" style="text-align: center"> Choose a game in progress to join:</div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row">
+                <div class="game-table">
+                    <table><thead><th>Game Code</th><th>Players</th><th> </th></thead></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+<script>
+
+    document.querySelector('#game-join').addEventListener('click', go);
+
+
+    $.ajax({
+        url: "/api/games"
+    })
+    .done(function( data ) {
+       var games = JSON.parse(data);
+
+       if(games.length == 0) {
+           $('.othergames').css('display','none');
+           return;
+       }
+
+       games.sort(function (a,b) {
+           return a.players < b.players;
+       });
+
+       var table = '<table><thead><tr><th>Game Code</th><th>Players</th><th> </th></tr></thead>';
+
+       for (var g in games) {
+            table += '<tr><td>'+games[g].code+'</td><td>'+games[g].players+'</td><td><div class="btn btn-primary game-join-table" code="'+games[g].code+'">Join</div></td></tr>'
+       }
+
+       table += '</table>'
+
+
+        $('.game-table').html(table);
+
+    });
+
+    function go(code) {
+        sessionStorage.username = document.querySelector('#username').value;
+        sessionStorage.color = document.querySelector('#color').value;
+
+        var room =  '';
+        if(code === null || typeof(code) == 'object')
+            room = $('#roomid').val();
+        else
+            room = code;
+
+
+        if(!sessionStorage.username || sessionStorage.username == '') {
+            alert('Please enter a username.')
+            return;
+        }
+        if(!sessionStorage.color || sessionStorage.color == '')
+        {
+            alert('Please choose a color for your character.')
+            return;
+        }
+        if(!room || room == ''){
+            alert('Please enter a room code.');
+            return;
+        }
+        if(sessionStorage.username.length > 20) {
+            alert('The username must be between 1 and 20 characters.');
+            return;
+        }
+        if(room.length > 10 || room.length < 4){
+            alert('The room code must be between 4 and 10 characters.');
+            return;
+        }
+
+        window.location = '/game/'+room;
+
+    }
+
+    $(document).ready(function() {
+        $(document).on("click", ".game-join-table", function (e) {
+           //console.log($(this).attr('code'));
+           go($(this).attr('code'))
+        });
+    });
+
+
+</script>
+</html>

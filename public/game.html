@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="stylesheet.css"/>
+    <title>Get to the gate.</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script src="netcode.js"></script>
+
+</head>
+<body>
+<canvas id="gamewindow"></canvas>
+
+<div id="pause">Menu</div>
+
+<div id="menu-main">
+    <div id="menu-close">X</div>
+    <div class="row "><h2>MENU</h2></div>
+    <div class="menu-items">
+        <div class="row menu-item" action="continue">Continue</div>
+        <div class="row menu-item" action="restart">Restart</div>
+        <div class="row menu-item" action="leave">Leave Game</div>
+    </div>
+</div>
+
+<!--<button onclick="startgame()">Start</button>-->
+<script src="pagecontrol.js"></script>
+<script src="object.js"></script>
+<script src="box.js"></script>
+<script src="game.js"></script>
+<script src="character.js"></script>
+<script src="objective.js"></script>
+<script src="uielement.js"></script>
+<script src="textbanner.js"></script>
+
+
+</body>
+</html>
